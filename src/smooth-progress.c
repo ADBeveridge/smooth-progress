@@ -18,3 +18,49 @@
 
 #include "smooth-progress.h"
 
+typedef struct smooth_progress {
+	GTimer* supply_timer;
+	GTimer* smooth_timer;
+
+	double rate;
+};
+
+struct smooth_progress* smooth_progress_new ()
+{
+	struct smooth_progress* sp = (struct smooth_progress*)malloc(sizeof(struct smooth_progress));
+	sp->supply_timer = NULL;
+	sp->smooth_timer = NULL;
+	sp->rate = 0.0;
+
+	return sp;
+}
+
+/* Return the calculated progress. */
+double smooth_progress_get_progress (struct smooth_progress* sp)
+{
+	/* This executes on the very first call to the progress getter. */
+	if (sp->smooth_timer == NULL) {
+		sp->smooth_timer = g_timer_new();
+		g_timer_start(sp->smooth_timer);
+	}
+
+	return g_timer_elapsed(sp->smooth_timer, NULL) * sp->rate;
+}
+
+/* Give info so rate can be extrapolated. */
+void smooth_progress_supply_progress(struct smooth_progress* sp, double progress)
+{
+	// Execute only on first call.
+	if (sp->supply_timer == NULL)
+	{
+		sp->supply_timer = g_timer_new();
+		g_timer_start(sp->supply_timer);
+
+		return;
+	}
+
+	else {
+		sp->rate = progress / g_timer_elapsed(sp->supply_timer, NULL);
+	}
+}
+
