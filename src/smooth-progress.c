@@ -16,5 +16,5 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "smooth_progress.h"
+#include "smooth-progress.h"
 

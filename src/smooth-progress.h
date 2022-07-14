@@ -23,7 +23,7 @@
 G_BEGIN_DECLS
 
 #define SMOOTH_PROGRESS_INSIDE
-# include "smooth_progress-version.h"
+# include "smooth-progress-version.h"
 #undef SMOOTH_PROGRESS_INSIDE
 
 G_END_DECLS
