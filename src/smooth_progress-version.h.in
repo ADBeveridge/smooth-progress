@@ -1,0 +1,94 @@
+/* smooth_progress-version.h.in
+ *
+ * Copyright 2022 Alan Beveridge
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#pragma once
+
+#if !defined(SMOOTH_PROGRESS_INSIDE) && !defined(SMOOTH_PROGRESS_COMPILATION)
+# error "Only <smooth-progress.h> can be included directly."
+#endif
+
+/**
+ * SECTION:smooth_progressversion
+ * @short_description: smooth-progress version checking
+ *
+ * smooth-progress provides macros to check the version of the library
+ * at compile-time
+ */
+
+/**
+ * SMOOTH_PROGRESS_MAJOR_VERSION:
+ *
+ * smooth-progress major version component (e.g. 1 if %SMOOTH_PROGRESS_VERSION is 1.2.3)
+ */
+#define SMOOTH_PROGRESS_MAJOR_VERSION (@MAJOR_VERSION@)
+
+/**
+ * SMOOTH_PROGRESS_MINOR_VERSION:
+ *
+ * smooth-progress minor version component (e.g. 2 if %SMOOTH_PROGRESS_VERSION is 1.2.3)
+ */
+#define SMOOTH_PROGRESS_MINOR_VERSION (@MINOR_VERSION@)
+
+/**
+ * SMOOTH_PROGRESS_MICRO_VERSION:
+ *
+ * smooth-progress micro version component (e.g. 3 if %SMOOTH_PROGRESS_VERSION is 1.2.3)
+ */
+#define SMOOTH_PROGRESS_MICRO_VERSION (@MICRO_VERSION@)
+
+/**
+ * SMOOTH_PROGRESS_VERSION
+ *
+ * smooth-progress version.
+ */
+#define SMOOTH_PROGRESS_VERSION (@VERSION@)
+
+/**
+ * SMOOTH_PROGRESS_VERSION_S:
+ *
+ * smooth-progress version, encoded as a string, useful for printing and
+ * concatenation.
+ */
+#define SMOOTH_PROGRESS_VERSION_S "@VERSION@"
+
+#define SMOOTH_PROGRESS_ENCODE_VERSION(major,minor,micro) \
+        ((major) << 24 | (minor) << 16 | (micro) << 8)
+
+/**
+ * SMOOTH_PROGRESS_VERSION_HEX:
+ *
+ * smooth-progress version, encoded as an hexadecimal number, useful for
+ * integer comparisons.
+ */
+#define SMOOTH_PROGRESS_VERSION_HEX \
+        (SMOOTH_PROGRESS_ENCODE_VERSION (SMOOTH_PROGRESS_MAJOR_VERSION, SMOOTH_PROGRESS_MINOR_VERSION, SMOOTH_PROGRESS_MICRO_VERSION))
+
+/**
+ * SMOOTH_PROGRESS_CHECK_VERSION:
+ * @major: required major version
+ * @minor: required minor version
+ * @micro: required micro version
+ *
+ * Compile-time version checking. Evaluates to %TRUE if the version
+ * of smooth-progress is greater than the required one.
+ */
+#define SMOOTH_PROGRESS_CHECK_VERSION(major,minor,micro)   \
+        (SMOOTH_PROGRESS_MAJOR_VERSION > (major) || \
+         (SMOOTH_PROGRESS_MAJOR_VERSION == (major) && SMOOTH_PROGRESS_MINOR_VERSION > (minor)) || \
+         (SMOOTH_PROGRESS_MAJOR_VERSION == (major) && SMOOTH_PROGRESS_MINOR_VERSION == (minor) && \
+          SMOOTH_PROGRESS_MICRO_VERSION >= (micro)))
