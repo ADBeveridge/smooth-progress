@@ -26,4 +26,9 @@ G_BEGIN_DECLS
 # include "smooth-progress-version.h"
 #undef SMOOTH_PROGRESS_INSIDE
 
+struct smooth_progress* smooth_progress_new ();
+double smooth_progress_get_progress (struct smooth_progress* sp);
+void smooth_progress_supply_progress(struct smooth_progress* sp, double progress);
+void smooth_progress_destroy(struct smooth_progress* sp);
+
 G_END_DECLS

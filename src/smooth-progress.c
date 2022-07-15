@@ -35,6 +35,14 @@ struct smooth_progress* smooth_progress_new ()
 	return sp;
 }
 
+void smooth_progress_destroy(struct smooth_progress* sp)
+{
+	if(sp->supply_timer != NULL)
+		g_timer_destroy(sp->supply_timer);
+	if(sp->smooth_timer != NULL)
+		g_timer_destroy(sp->smooth_timer);
+}
+
 /* Return the calculated progress. */
 double smooth_progress_get_progress (struct smooth_progress* sp)
 {
@@ -62,12 +70,4 @@ void smooth_progress_supply_progress(struct smooth_progress* sp, double progress
 	else {
 		sp->rate = progress / g_timer_elapsed(sp->supply_timer, NULL);
 	}
-}
-
-void smooth_progress_destroy(struct smooth_progress* sp)
-{
-	if(sp->supply_timer != NULL)
-		g_timer_destroy(sp->supply_timer);
-	if(sp->smooth_timer != NULL)
-		g_timer_destroy(sp->smooth_timer);
 }
