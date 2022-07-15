@@ -18,7 +18,7 @@
 
 #include "smooth-progress.h"
 
-typedef struct smooth_progress {
+struct smooth_progress {
 	GTimer* supply_timer;
 	GTimer* smooth_timer;
 
@@ -64,3 +64,10 @@ void smooth_progress_supply_progress(struct smooth_progress* sp, double progress
 	}
 }
 
+void smooth_progress_destroy(struct smooth_progress* sp)
+{
+	if(sp->supply_timer != NULL)
+		g_timer_destroy(sp->supply_timer);
+	if(sp->smooth_timer != NULL)
+		g_timer_destroy(sp->smooth_timer);
+}
